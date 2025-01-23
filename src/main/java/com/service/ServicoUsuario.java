@@ -19,4 +19,10 @@ public class ServicoUsuario
   {
     return repositorioUsuario.save(usuario);
   }
+
+  @Transactional(readOnly = true)
+  public Usuario buscarPorID(Long id)
+  {
+    return repositorioUsuario.findById(id).orElseThrow(() -> new RuntimeException("Usuário não encontrado!"));
+  }
 }

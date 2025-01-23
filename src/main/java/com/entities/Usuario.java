@@ -19,20 +19,19 @@ public class Usuario implements Serializable
   @Column(name = "id")
   private Long id;
 
-  @Column(name = "nomeUsuario", nullable = false, unique = true, length = 100)
-  private String nomeUsuario;
+  @Column(name = "email", nullable = false, unique = true, length = 100)
+  private String email;
   @Column(name = "senha", nullable = false, length = 200)
   private String senha;
-  @Column(name = "criadoPor")
-  private String criadoPor;
-  @Column(name = "modificadoPor")
-  private String modificadoPor;
   @Enumerated(EnumType.STRING)
   @Column(name = "perfil", nullable = false, length = 25)
   private Perfil perfil;
-
+  @Column(name = "criadoPor")
+  private String criadoPor;
   @Column(name = "dataCriacao")
   private LocalDateTime dataCriacao;
+  @Column(name = "modificadoPor")
+  private String modificadoPor;
   @Column(name = "dataModificacao")
   private LocalDateTime dataModificacao;
 
