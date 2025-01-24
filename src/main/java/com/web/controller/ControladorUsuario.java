@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.entities.Usuario;
 import com.service.ServicoUsuario;
+import com.web.DTO.UsuarioCreateDTO;
+import com.web.DTO.UsuarioResponseDTO;
+import com.web.DTO.mapper.UsuarioMapper;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,10 +28,10 @@ public class ControladorUsuario
   private final ServicoUsuario servicoUsuario;
 
   @PostMapping
-  public ResponseEntity<Usuario> criar(@RequestBody Usuario usuario)
+  public ResponseEntity<UsuarioResponseDTO> criar(@RequestBody UsuarioCreateDTO usuarioDTO)
   {
-    Usuario u = servicoUsuario.salvar(usuario);
-    return ResponseEntity.status(HttpStatus.CREATED).body(u);
+    Usuario u = servicoUsuario.salvar(UsuarioMapper.toUsuario(usuarioDTO));
+    return ResponseEntity.status(HttpStatus.CREATED).body(UsuarioMapper.toDTO(u));
   }
 
   @GetMapping("/{id}")

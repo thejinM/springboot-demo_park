@@ -25,7 +25,7 @@ public class Usuario implements Serializable
   private String senha;
   @Enumerated(EnumType.STRING)
   @Column(name = "perfil", nullable = false, length = 25)
-  private Perfil perfil;
+  private Perfil perfil = Perfil.PERFIL_CLIENTE;
   @Column(name = "criadoPor")
   private String criadoPor;
   @Column(name = "dataCriacao")
