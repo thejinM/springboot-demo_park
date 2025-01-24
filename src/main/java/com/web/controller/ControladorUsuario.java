@@ -3,6 +3,7 @@ package com.web.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,6 +33,13 @@ public class ControladorUsuario
   public ResponseEntity<Usuario> getByID(@PathVariable Long id)
   {
     Usuario u = servicoUsuario.buscarPorID(id);
+    return ResponseEntity.ok(u);
+  }
+
+  @PatchMapping("/{id}")
+  public ResponseEntity<Usuario> atualizarSenha(@PathVariable Long id, @RequestBody Usuario usuario)
+  {
+    Usuario u = servicoUsuario.atualizarSenha(id, usuario.getSenha());
     return ResponseEntity.ok(u);
   }
 }

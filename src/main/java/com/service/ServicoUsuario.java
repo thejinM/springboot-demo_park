@@ -25,4 +25,12 @@ public class ServicoUsuario
   {
     return repositorioUsuario.findById(id).orElseThrow(() -> new RuntimeException("Usuário não encontrado!"));
   }
+
+  @Transactional
+  public Usuario atualizarSenha(Long id, String senha) 
+  {
+    Usuario u = buscarPorID(id);
+    u.setSenha(senha);
+    return u;
+  }
 }
