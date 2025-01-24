@@ -1,5 +1,8 @@
 package com.web.DTO.mapper;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 
@@ -28,5 +31,10 @@ public class UsuarioMapper
     ModelMapper mapper = new ModelMapper();
     mapper.addMappings(props);
     return mapper.map(usuario, UsuarioResponseDTO.class);
+  }  
+
+  public static List<UsuarioResponseDTO> toListDTO(List<Usuario> usuarios)
+  {
+    return usuarios.stream().map(usuario -> toDTO(usuario)).collect(Collectors.toList());
   }  
 }

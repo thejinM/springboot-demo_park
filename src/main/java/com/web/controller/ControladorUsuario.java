@@ -45,14 +45,14 @@ public class ControladorUsuario
   @PatchMapping("/{id}")
   public ResponseEntity<Void> atualizarSenha(@PathVariable Long id, @RequestBody UsuarioSenhaDTO usuario)
   {
-    Usuario u = servicoUsuario.atualizarSenha(id, usuario.getSenhaAtual(), usuario.getNovaSenha(), usuario.getConfirmaSenha());
+    servicoUsuario.atualizarSenha(id, usuario.getSenhaAtual(), usuario.getNovaSenha(), usuario.getConfirmaSenha());
     return ResponseEntity.noContent().build();
   }
 
   @GetMapping
-  public ResponseEntity<List<Usuario>> buscarTodos()
+  public ResponseEntity<List<UsuarioResponseDTO>> buscarTodos()
   {
     List<Usuario> us = servicoUsuario.buscarTodos();
-    return ResponseEntity.ok(us);
+    return ResponseEntity.ok(UsuarioMapper.toListDTO(us));
   }
 }
