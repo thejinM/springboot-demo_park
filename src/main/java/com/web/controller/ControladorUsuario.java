@@ -1,5 +1,7 @@
 package com.web.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,5 +43,12 @@ public class ControladorUsuario
   {
     Usuario u = servicoUsuario.atualizarSenha(id, usuario.getSenha());
     return ResponseEntity.ok(u);
+  }
+
+  @GetMapping
+  public ResponseEntity<List<Usuario>> buscarTodos()
+  {
+    List<Usuario> us = servicoUsuario.buscarTodos();
+    return ResponseEntity.ok(us);
   }
 }
