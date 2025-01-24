@@ -19,6 +19,7 @@ import com.web.DTO.UsuarioResponseDTO;
 import com.web.DTO.UsuarioSenhaDTO;
 import com.web.DTO.mapper.UsuarioMapper;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -29,7 +30,7 @@ public class ControladorUsuario
   private final ServicoUsuario servicoUsuario;
 
   @PostMapping
-  public ResponseEntity<UsuarioResponseDTO> criar(@RequestBody UsuarioCreateDTO usuarioDTO)
+  public ResponseEntity<UsuarioResponseDTO> criar(@Valid @RequestBody UsuarioCreateDTO usuarioDTO)
   {
     Usuario u = servicoUsuario.salvar(UsuarioMapper.toUsuario(usuarioDTO));
     return ResponseEntity.status(HttpStatus.CREATED).body(UsuarioMapper.toDTO(u));
@@ -43,7 +44,7 @@ public class ControladorUsuario
   }
 
   @PatchMapping("/{id}")
-  public ResponseEntity<Void> atualizarSenha(@PathVariable Long id, @RequestBody UsuarioSenhaDTO usuario)
+  public ResponseEntity<Void> atualizarSenha(@PathVariable Long id, @Valid @RequestBody UsuarioSenhaDTO usuario)
   {
     servicoUsuario.atualizarSenha(id, usuario.getSenhaAtual(), usuario.getNovaSenha(), usuario.getConfirmaSenha());
     return ResponseEntity.noContent().build();
