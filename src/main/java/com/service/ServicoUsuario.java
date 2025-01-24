@@ -29,10 +29,20 @@ public class ServicoUsuario
   }
 
   @Transactional
-  public Usuario atualizarSenha(Long id, String senha) 
+  public Usuario atualizarSenha(Long id, String senhaAtual, String novaSenha, String confirmaSenha) 
   {
+    if (!novaSenha.equals(confirmaSenha))
+    {
+      throw new RuntimeException("Senhas não correspondentes! Tente novamente.");
+    }
+
     Usuario u = buscarPorID(id);
-    u.setSenha(senha);
+    if (!u.getSenha().equals(senhaAtual)) 
+    {
+      throw new RuntimeException("Senhas não correspondentes! Tente novamente.");
+    }
+
+    u.setSenha(novaSenha);
     return u;
   }
 

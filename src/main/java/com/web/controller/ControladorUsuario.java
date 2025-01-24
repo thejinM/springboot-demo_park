@@ -16,6 +16,7 @@ import com.entities.Usuario;
 import com.service.ServicoUsuario;
 import com.web.DTO.UsuarioCreateDTO;
 import com.web.DTO.UsuarioResponseDTO;
+import com.web.DTO.UsuarioSenhaDTO;
 import com.web.DTO.mapper.UsuarioMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -35,17 +36,17 @@ public class ControladorUsuario
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Usuario> getByID(@PathVariable Long id)
+  public ResponseEntity<UsuarioResponseDTO> getByID(@PathVariable Long id)
   {
     Usuario u = servicoUsuario.buscarPorID(id);
-    return ResponseEntity.ok(u);
+    return ResponseEntity.ok(UsuarioMapper.toDTO(u));
   }
 
   @PatchMapping("/{id}")
-  public ResponseEntity<Usuario> atualizarSenha(@PathVariable Long id, @RequestBody Usuario usuario)
+  public ResponseEntity<Void> atualizarSenha(@PathVariable Long id, @RequestBody UsuarioSenhaDTO usuario)
   {
-    Usuario u = servicoUsuario.atualizarSenha(id, usuario.getSenha());
-    return ResponseEntity.ok(u);
+    Usuario u = servicoUsuario.atualizarSenha(id, usuario.getSenhaAtual(), usuario.getNovaSenha(), usuario.getConfirmaSenha());
+    return ResponseEntity.noContent().build();
   }
 
   @GetMapping
