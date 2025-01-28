@@ -2,9 +2,12 @@ package com.service;
 
 import java.util.List;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.Exception.ExceptionUsuarioNaoEncontrado;
+import com.Exception.ExceptionViolacaoEmailUnico;
 import com.entities.Usuario;
 import com.repository.RepositorioUsuario;
 
@@ -19,13 +22,20 @@ public class ServicoUsuario
   @Transactional
   public Usuario salvar(Usuario usuario)
   {
-    return repositorioUsuario.save(usuario);
+    try
+    {
+      return repositorioUsuario.save(usuario);
+    }
+    catch (DataIntegrityViolationException exception)
+    {
+      throw new ExceptionViolacaoEmailUnico(String.format("Email '%s' já cadastrado!", usuario.getEmail()));
+    }
   }
 
   @Transactional(readOnly = true)
   public Usuario buscarPorID(Long id)
   {
-    return repositorioUsuario.findById(id).orElseThrow(() -> new RuntimeException("Usuário não encontrado!"));
+    return repositorioUsuario.findById(id).orElseThrow(() -> new ExceptionUsuarioNaoEncontrado(String.format("Usuário com ID %s não encontrado!", id)));
   }
 
   @Transactional
